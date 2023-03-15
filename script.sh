@@ -59,6 +59,10 @@ mapfile -t slides < <(find "${dir}" -iname '*.png' | sort -r)
 for f in "${slides[@]}"; do
     f=$(basename "$f")
     img="<section><img src='$f'></section>"
-    sed -i "16i $img" "${dir}"/index.html 
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        sed -i "16i $img" "${dir}"/index.html 
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        gsed -i "16i $img" "${dir}"/index.html 
+    fi
 done;
 echo "DONE"
